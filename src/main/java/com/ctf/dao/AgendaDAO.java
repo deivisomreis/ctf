@@ -17,9 +17,7 @@ public class AgendaDAO implements AgendaInterface {
 			
 			EntityManager manager = ConnectionFactory.getConnection();
 			
-			try{
-				manager = ConnectionFactory.getConnection();
-				
+			try{				
 				manager.getTransaction().begin();
 				manager.persist(agenda);
 				manager.getTransaction().commit();
@@ -35,18 +33,22 @@ public class AgendaDAO implements AgendaInterface {
 	}
 
 	@Override
-	public void remove(Agenda agenda) {
-		if(agenda != null){
+	public void remove(Integer id) {
+		if(id != null && id > 0){
 			
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				manager = ConnectionFactory.getConnection();
-				manager.remove(agenda);
+				Agenda agendaObj = manager.find(Agenda.class, id);
+				
+				if(agendaObj != null){
+					manager.getTransaction().begin();
+					manager.remove(agendaObj);
+					manager.getTransaction().commit();
+				}
 			}
 			catch(Exception  ex){
 				ex.printStackTrace();
-				manager.getTransaction().rollback();
 			}
 			finally {
 				manager.close();

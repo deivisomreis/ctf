@@ -35,7 +35,7 @@
 		<c:if test="${not empty erro}">
 			<div class="alert alert-danger">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Erro! </strong>  ${erro}
+				<strong>Erro: &nbsp; </strong>  ${erro}
 			</div>
 		</c:if>
 		<form role="form" action="/userlogin" method="post"> 

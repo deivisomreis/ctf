@@ -25,14 +25,14 @@
 				<a class="navbar-brand" href="/">CTF :: ${user.name}</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/user/home">Inicio</a></li>
+				<li><a href="/user/home">Inicio</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Usuário<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/show">Visualizar Dados</a></li>
 						<li><a href="/user/edit">Alterar</a></li>
 					</ul></li>
-				<li class="dropdown"><a class="dropdown-toggle"
+				<li class="active" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Tarefas<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/tasks/register">Nova Tarefa</a></li>
@@ -83,24 +83,46 @@
 					<th>Status</th>
 					<th>Finalizada</th>
 					<th>Usuário</th>
-					<th colspan="2">Opções</th>
+					<th colspan="3">Opções</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${tasks}" var="task">
+				<c:if test="${not empty tasks}">
 					<tr>
-						<td>${task.id}</td>
-						<td>${task.name}</td>
-						<td><fmt:formatDate value="${task.registered}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
-						<td>${task.note}</td>
-						<td>
-							<c:if test="${task.status == true }">Finalizada</c:if>
-							<c:if test="${task.status ==false }">Aberto - <a href="/user/tasks/finalize_tasks">(Finalizar?)</a></c:if> 
-						</td>
-						<td><fmt:formatDate value="${task.complete}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
-						<td>${user.name}</td>
-						<td><a href="/user/tasks/edit?id=${task.id}"><button type="button" class="btn btn-info">Editar</button></a></td>
-						<td><a href="/user/tasks/remove?id=${task.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>
+						<td>Sem Tarefas</td>
+					</tr>
+				</c:if>
+				<c:forEach items="${tasks}" var="task">
+					<c:if test="${task.status == false}">
+						<tr data-toggle="tooltip" style="background-color: #0099cc; color: black; font-stretch: normal;" title="Atividade em Aberto!">
+					</c:if>
+					<c:if test="${task.status ==true}">
+						<tr data-toggle="tooltip" title="Ok!">
+					</c:if>
+					<td>${task.id}</td>
+					<td>${task.name}</td>
+					<td><fmt:formatDate value="${task.registered}"
+							pattern="dd/MM/yyyy HH:mm:ss" /></td>
+					<td>${task.note}</td>
+					<td><c:if test="${task.status == true }">Finalizada</c:if> <c:if
+							test="${task.status ==false }">Aberto - <a
+								href="/user/tasks/finalize_tasks?id=${task.id}">(Finalizar?)</a>
+						</c:if></td>
+					<td><fmt:formatDate value="${task.complete}"
+							pattern="dd/MM/yyyy HH:mm:ss" /></td>
+					<td>${user.name}</td>
+					<td>
+						<a href="/user/tasks/edit?id=${task.id}">
+								<button type="button" class="btn btn-info">Editar</button>
+						</a>
+					</td>
+					<td>
+						<a href="/user/tasks/show?id=${task.id}">
+							<button type="button" class="btn btn-warning">Vizualizar</button>
+						</a>						
+					</td>
+					<td><a href="/user/tasks/remove?id=${task.id}"><button
+								type="button" class="btn btn-danger">Remover</button></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -121,3 +143,9 @@ form {
 	width: 450px;
 }
 </style>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>

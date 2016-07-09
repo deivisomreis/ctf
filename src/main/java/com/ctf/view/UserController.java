@@ -42,11 +42,17 @@ public class UserController {
 			User userObj = userDAO.login(user, password);
 			
 			if(userObj != null){
-				session.setAttribute("user", userObj);
-				return "user/home";
+				if(userObj.isStatus()){
+					session.setAttribute("user", userObj);
+					return "user/home";
+				}
+				else{
+					model.addAttribute("erro", userObj.getName() + " seu acesso esta bloqueado!");
+					return "userlogin";
+				}
 			}
 			else{
-				model.addAttribute("erro", "Favor verificar os dados");
+				model.addAttribute("erro", "");
 				return "userlogin";
 			}
 		}
@@ -120,8 +126,17 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/tasks/edit")
-	public String editTask(Integer id, Model model, HttpSession session) {
-		return	"user/tasks/edit";
+	public String editTask(Integer id, Model model, HttpSession session) {		
+		if(id != null && id  > 0){
+			model.addAttribute("user", session.getAttribute("user"));
+			model.addAttribute("task", tasksDAO.tasks(id));
+			
+			return "user/tasks/edit";
+		}
+		else{
+			model.addAttribute("erro", "erro ao redirecionar tarefa!");
+			return listTasks(model, session);
+		}
 	}
 	
 	@RequestMapping("/user/tasks/remove")
@@ -145,69 +160,179 @@ public class UserController {
 		return "user/tasks/list";
 	}
 	
-	@RequestMapping("user/tasks/finalize_task")
+	@RequestMapping("/user/tasks/finalize_tasks")
 	public String finalizeTasks(Integer id, HttpSession session, Model model){
+		if(id != null && id > 0){
+			tasksDAO.finalizeTask(id);
+			
+			model.addAttribute("sucesso", "tarefa finalizada com sucesso!");
+		}
+		else{
+			model.addAttribute("erro", "erro ao finalizar a tarefa, tente novamente");
+		}
+		
+		
 		return listTasks(model, session);
 	}
 	
 	@RequestMapping("/user/tasks/show")
 	public String  showTasks(Model model, HttpSession session, Integer id) {
-		return "user/tasks/show";
+		if(id != null && id >0){
+			model.addAttribute("user", session.getAttribute("user"));
+			model.addAttribute("task", tasksDAO.tasks(id));
+			
+			return "user/tasks/show";
+		}
+		else{
+			model.addAttribute("erro", "Erro ao redirecionar, tente novamente!");
+			
+			return listTasks(model, session);
+		}
+		
 	}
 	
 	@RequestMapping("/user/tasks/update")
-	public String updateTasks(Model model, HttpSession session, Integer id){
+	public String updateTasks(Model model, HttpSession session, Tasks task, String option){
+		if(option != null && !option.isEmpty() && option.equals("editar") && task != null){
+			Tasks taskModel = tasksDAO.tasks(task.getId());
+			
+			if(taskModel  != null){
+				taskModel.setName(task.getName());
+				taskModel.setStatus(false);
+				taskModel.setComplete(null);
+				
+				tasksDAO.update(taskModel);
+				
+				model.addAttribute("sucesso", taskModel.getName()   + " editada com sucesso!");
+			}
+		}
+		else
+			model.addAttribute("erro", "Erro ao atualizar a tarefa, tente novamente");
+		
 		return listTasks(model, session);
 	}
 	
-	public String  newAgenda(Agenda agenda, Model model, HttpSession session) {
+	@RequestMapping("/user/agenda/register")
+	public String  newAgenda(Agenda agenda, Model model, HttpSession session, String option) {
+		
+		model.addAttribute("user", session.getAttribute("user"));
+		
+		if(option != null){
+			if(option.equals("cadastrar") && agenda != null && !agenda.getName().isEmpty()){
+				agenda.setUser((User) session.getAttribute("user"));
+				agendaDAO.insert(agenda);
+				model.addAttribute("sucesso", agenda.getName() + " registrada com sucesso!");
+			}
+			else{
+				model.addAttribute("erro", "favor verificar os dados");
+			}
+		}
+		
 		return "user/agenda/new";
 	}
 	
+	@RequestMapping("/user/agenda/edit")
 	public String editAgenda(Integer id, Model model, HttpSession session) {
-		return "user/agenda/edit";
+		if(id != null && id > 0){
+			model.addAttribute("agenda", agendaDAO.agenda(id));
+			model.addAttribute("user", session.getAttribute("user"));
+			
+			return "user/agenda/edit";
+		}
+		else{
+			model.addAttribute("erro", "erro ao direcionar o contato!");
+			return listAgenda(model, session);
+		}
 	}
 	
+	@RequestMapping("/user/agenda/remove")
 	public String removeAgenda(Integer id, Model model, HttpSession session){
+		if(id != null && id > 0){
+			agendaDAO.remove(id);
+			model.addAttribute("sucesso", "contato removido com sucesso!");
+		}
+		else
+			model.addAttribute("erro", "erro ao remover o contato, tente novamente");
+		
 		return listAgenda(model, session);
 	}
 	
+	@RequestMapping("/user/agenda/list")
 	public String listAgenda(Model model, HttpSession session){
+		model.addAttribute("user", session.getAttribute("user"));
+		model.addAttribute("agendas", agendaDAO.agendas((User) session.getAttribute("user")));
 		return "user/agenda/list";
 	}
 	
-	public String updateAgenda(Agenda agenda, Model model, HttpSession session){
+	@RequestMapping("/user/agenda/update")
+	public String updateAgenda(Agenda agenda, Model model, HttpSession session, String option){
+		if(option != null){
+			if(option.equals("editar") && agenda != null && !agenda.getName().isEmpty()){
+				agendaDAO.update(agenda);
+				model.addAttribute("sucesso", agenda.getName() + " editado com suceso");
+			}
+			else{
+				model.addAttribute("erro", "favor verificar os dados, tente novamente");
+				editAgenda(agenda.getId(), model, session);
+			}
+		}
+		
 		return listAgenda(model, session);
 	}
 	
+	@RequestMapping("/user/agenda/show")
 	public String showAgenda(Integer id, Model model, HttpSession session){
-		return "user/agenda/show";
+		if(id != null && id > 0){
+			model.addAttribute("user ", session.getAttribute("user"));
+			model.addAttribute("agenda", agendaDAO.agenda(id));
+			return "user/agenda/show";
+		}
+		else
+			return listAgenda(model, session);
+		
 	}
 	
-	public String newFinancialControl(FinancialControl fc, Model model, HttpSession session) {
+	@RequestMapping("/user/financialcontrol/new")
+	public String newFinancialControl(FinancialControl fc, Model model, HttpSession session, String option) {
+		if(option != null){
+			if(option.equals("cadastrar") && fc != null && !fc.getName().isEmpty() && fc.getValue() > 0){
+				fcDAO.insert(fc);
+				model.addAttribute("sucesso", " Lançamento cadastrado com sucesso!");
+				model.addAttribute("user", session.getAttribute("user"));
+			}
+			else{
+				model.addAttribute("erro", "Erro ao cadastrar, favor verificar os dados!");
+			}
+		}
 		return "user/financialcontrol/new";
 	}
 	
+	@RequestMapping("/user/financialcontrol/edit")
 	public String  editFinancialControl(Integer  id, Model model, HttpSession session) {
 		return "user/financialcontrol/edit";
 	}
 	
+	@RequestMapping("/user/financialcontrol/remove")
 	public String removeFinancialControl(Integer id, Model model, HttpSession session){
 		return listFinancialControl(model, session);
 	}
 	
+	@RequestMapping("/user/financialcontrol/list")
 	public String listFinancialControl(Model model, HttpSession session){
 		return "user/financialcontrol/list";
 	}
 	
+	@RequestMapping("/user/financialcontrol/update")
 	public String updateFinancialControl(FinancialControl fc, Model model, HttpSession  session){
 		return listFinancialControl(model, session);
 	}
 	
+	@RequestMapping("/user/financialcontrol/show")
 	public String showFinancialControl(Integer id, Model model, HttpSession session){
 		return "user/financialcontrol/show";
 	}
 	
+	@RequestMapping("/user/financialcontrol/down")
 	public String downFinancialControl(Integer id, Model model, HttpSession session){
 		return listFinancialControl(model, session);
 	}

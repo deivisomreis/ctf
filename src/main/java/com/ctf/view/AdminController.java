@@ -100,7 +100,7 @@ public class AdminController {
 			return "admin/user/new";
 		
 		else {
-			if(cadastrar.equals("cadastrar") && user != null && !user.getName().isEmpty() && !user.getCpf().isEmpty() && !user.getEmail().isEmpty() && !user.getPassword().isEmpty()){
+			if(cadastrar.equals("cadastrar") && user != null){
 				Date dateRegister = new Date();
 				user.setRegistered(dateRegister); // data de registro!
 				userDAO.insert(user);

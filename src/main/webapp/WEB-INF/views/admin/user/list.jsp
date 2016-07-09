@@ -58,6 +58,7 @@
 					<th>Nome</th>
 					<th>Email</th>
 					<th>CPF</th>
+					<th>Status</th>
 					<th>Registrado</th>
 					<th colspan="2">Opções</th>
 				</tr>
@@ -69,6 +70,12 @@
 						<td>${usuario.name}</td>
 						<td><a href="mailto:${usuario.email}">${usuario.email}</a></td>
 						<td>${usuario.cpf}</td>
+						<c:if test="${usuario.status ==true}">
+							<td>Ativo</td>
+						</c:if>
+						<c:if test="${usuario.status ==false}">
+							<td>Desativado</td>
+						</c:if>
 						<td><fmt:formatDate value="${usuario.registered}" pattern="dd/MM/yyyy"/></td>
 						<td><a href="/admin/user/edit?id=${usuario.id}"><button type="button" class="btn btn-info">Editar</button></a></td>
 						<td><a href="/admin/user/remove?id=${usuario.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>

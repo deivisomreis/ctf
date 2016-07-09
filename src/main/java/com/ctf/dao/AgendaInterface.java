@@ -8,7 +8,7 @@ import com.ctf.model.User;
 public interface AgendaInterface {
 	
 	void insert(Agenda agenda);
-	void remove(Agenda agenda);
+	void remove(Integer id);
 	void update(Agenda agenda);
 	Agenda agenda(Integer id);
 	List<Agenda> agendas(User user);

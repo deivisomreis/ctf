@@ -22,6 +22,7 @@ public class FinancialControl implements Serializable {
 	private Date registered;
 	private boolean status;
 	private Date paid;
+	private Double value;
 	private String note;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -81,5 +82,13 @@ public class FinancialControl implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Double getValue() {
+		return value;
+	}
+
+	public void setValue(Double value) {
+		this.value = value;
 	}
 }

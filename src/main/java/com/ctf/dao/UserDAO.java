@@ -12,7 +12,7 @@ public class UserDAO implements UserInterface {
 
 	@Override
 	public void insert(User user) {
-		if(user != null && !user.getCpf().isEmpty() && !user.getName().isEmpty() && !user.getPassword().isEmpty() && !user.getEmail().isEmpty()){
+		if(user != null && !user.getName().isEmpty() && !user.getPassword().isEmpty() && !user.getEmail().isEmpty()){
 			
 			EntityManager manager = ConnectionFactory.getConnection();
 			
@@ -39,9 +39,7 @@ public class UserDAO implements UserInterface {
 			User user = manager.find(User.class, id);
 			
 			try{
-				manager.getTransaction().begin();
-				manager.remove(user);
-				manager.getTransaction().commit();
+				 manager.createNativeQuery("delete User, Tasks from User inner join Tasks on User.id = Tasks.user_id where User.id=23");
 			}
 			catch(Exception ex){
 				ex.printStackTrace();
@@ -59,10 +57,8 @@ public class UserDAO implements UserInterface {
 			
 			EntityManager manager = ConnectionFactory.getConnection();
 			
-			User userObj = manager.find(User.class, user.getId());
-			
 			try{
-				
+				User userObj = manager.find(User.class, user.getId());
 				userObj.setCpf(user.getCpf());
 				userObj.setEmail(user.getEmail());
 				userObj.setName(user.getName());
@@ -74,7 +70,6 @@ public class UserDAO implements UserInterface {
 			}
 			catch(Exception ex){
 				ex.printStackTrace();
-				manager.getTransaction().rollback();
 			}
 			finally {
 				manager.close();

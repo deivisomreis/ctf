@@ -25,14 +25,14 @@
 				<a class="navbar-brand" href="/">CTF :: ${user.name}</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/user/home">Inicio</a></li>
+				<li><a href="/user/home">Inicio</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Usuário<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/show">Visualizar Dados</a></li>
 						<li><a href="/user/edit">Alterar</a></li>
 					</ul></li>
-				<li class="dropdown"><a class="dropdown-toggle"
+				<li class="active" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Tarefas<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/tasks/register">Nova Tarefa</a></li>

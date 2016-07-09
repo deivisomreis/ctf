@@ -27,6 +27,7 @@ public class User implements Serializable {
 	private String cpf;
 	private Date registered;
 	private Date lastAccess;
+	private boolean status;
 	
 	public Integer getId() {
 		return id;
@@ -69,5 +70,11 @@ public class User implements Serializable {
 	}
 	public void setLastAccess(Date lastAccess) {
 		this.lastAccess = lastAccess;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 }

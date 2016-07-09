@@ -63,7 +63,9 @@ public class TasksDAO implements TasksInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
+				manager.getTransaction().begin();
 				manager.merge(tasks);
+				manager.getTransaction().commit();
 			}
 			catch(Exception  ex){
 				ex.printStackTrace();
@@ -99,7 +101,7 @@ public class TasksDAO implements TasksInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				Query query = manager.createQuery("from Tasks where user=:user order by id desc");
+				Query query = manager.createQuery("from Tasks where user=:user order by id desc, status");
 				query.setParameter("user", user);
 				
 				return query.getResultList();
@@ -131,6 +133,22 @@ public class TasksDAO implements TasksInterface {
 		}
 		
 		return null;
+	}
+	
+	public void finalizeTask(Integer id) {
+		if(id != null && id > 0){
+			Tasks task = tasks(id);
+			
+			if(task != null){
+				Date dateFinalize = new Date();
+				
+				task.setComplete(dateFinalize);
+				task.setStatus(true);
+				
+				update(task);
+			}
+		}
+		
 	}
 
 }
