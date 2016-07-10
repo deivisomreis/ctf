@@ -63,12 +63,12 @@ public class AgendaDAO implements AgendaInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				manager = ConnectionFactory.getConnection();
+				manager.getTransaction().begin();
 				manager.merge(agenda);
+				manager.getTransaction().commit();
 			}
 			catch(Exception ex){
 				ex.printStackTrace();
-				manager.getTransaction().rollback();
 			}
 			finally {
 				manager.close();
@@ -83,7 +83,6 @@ public class AgendaDAO implements AgendaInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				manager = ConnectionFactory.getConnection();
 				return manager.find(Agenda.class, id);
 			}
 			catch(Exception ex){
@@ -103,9 +102,7 @@ public class AgendaDAO implements AgendaInterface {
 			
 			EntityManager manager = ConnectionFactory.getConnection();
 			
-			try{
-				manager = ConnectionFactory.getConnection();
-				
+			try{				
 				Query  query = manager.createQuery("from Agenda where user=:user");
 				query.setParameter("user", user);
 				
@@ -128,8 +125,6 @@ public class AgendaDAO implements AgendaInterface {
 		EntityManager manager = ConnectionFactory.getConnection();
 		
 		try{
-			manager = ConnectionFactory.getConnection();
-			
 			return manager.createQuery("from Agenda").getResultList();
 		}
 		catch(Exception ex){

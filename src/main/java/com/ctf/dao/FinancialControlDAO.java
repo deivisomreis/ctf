@@ -17,10 +17,11 @@ public class FinancialControlDAO implements FinancialControlInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
+				manager.getTransaction().begin();
 				manager.persist(fc);
+				manager.getTransaction().commit();
 			}
 			catch(Exception ex){
-				manager.getTransaction().rollback();
 				ex.printStackTrace();
 			}
 			finally {
@@ -32,15 +33,21 @@ public class FinancialControlDAO implements FinancialControlInterface {
 	}
 
 	@Override
-	public void remove(FinancialControl fc) {
-		if(fc != null){
+	public void remove(Integer id) {
+		if(id != null && id > 0){
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				manager.remove(fc);
+				FinancialControl fc = manager.find(FinancialControl.class, id);
+				
+				if(fc != null){
+					manager.getTransaction().begin();
+					manager.remove(fc);
+					manager.getTransaction().commit();
+				}
+				
 			}
 			catch(Exception ex){
-				manager.getTransaction().rollback();
 				ex.printStackTrace();
 			}
 			finally {
@@ -54,11 +61,17 @@ public class FinancialControlDAO implements FinancialControlInterface {
 		if(fc != null){
 			EntityManager manager = ConnectionFactory.getConnection();
 			
+			FinancialControl fcObj = fc(fc.getId());
+			fcObj.setName(fc.getName());
+			fcObj.setNote(fc.getNote());
+			fcObj.setValue(fc.getValue());
+			
 			try{
+				manager.getTransaction().begin();
 				manager.merge(fc);
+				manager.getTransaction().commit();
 			}
 			catch(Exception ex){
-				manager.getTransaction().rollback();
 				ex.printStackTrace();
 			}
 			finally {

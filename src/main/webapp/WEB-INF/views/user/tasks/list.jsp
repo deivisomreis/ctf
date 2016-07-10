@@ -87,44 +87,47 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${not empty tasks}">
+				<c:if test="${empty tasks}">
 					<tr>
-						<td>Sem Tarefas</td>
+						<td colspan="10" align="center">Sem Tarefas</td>
 					</tr>
 				</c:if>
-				<c:forEach items="${tasks}" var="task">
-					<c:if test="${task.status == false}">
-						<tr data-toggle="tooltip" style="background-color: #0099cc; color: black; font-stretch: normal;" title="Atividade em Aberto!">
-					</c:if>
-					<c:if test="${task.status ==true}">
-						<tr data-toggle="tooltip" title="Ok!">
-					</c:if>
-					<td>${task.id}</td>
-					<td>${task.name}</td>
-					<td><fmt:formatDate value="${task.registered}"
-							pattern="dd/MM/yyyy HH:mm:ss" /></td>
-					<td>${task.note}</td>
-					<td><c:if test="${task.status == true }">Finalizada</c:if> <c:if
-							test="${task.status ==false }">Aberto - <a
-								href="/user/tasks/finalize_tasks?id=${task.id}">(Finalizar?)</a>
-						</c:if></td>
-					<td><fmt:formatDate value="${task.complete}"
-							pattern="dd/MM/yyyy HH:mm:ss" /></td>
-					<td>${user.name}</td>
-					<td>
-						<a href="/user/tasks/edit?id=${task.id}">
-								<button type="button" class="btn btn-info">Editar</button>
-						</a>
-					</td>
-					<td>
-						<a href="/user/tasks/show?id=${task.id}">
-							<button type="button" class="btn btn-warning">Vizualizar</button>
-						</a>						
-					</td>
-					<td><a href="/user/tasks/remove?id=${task.id}"><button
-								type="button" class="btn btn-danger">Remover</button></a></td>
-					</tr>
-				</c:forEach>
+				
+				<c:if test="${not empty tasks}">
+					<c:forEach items="${tasks}" var="task">
+						<c:if test="${task.status == false}">
+							<tr data-toggle="tooltip" style="background-color: #0099cc; color: black; font-stretch: normal;" title="Atividade em Aberto!">
+						</c:if>
+						<c:if test="${task.status ==true}">
+							<tr data-toggle="tooltip" title="Ok!">
+						</c:if>
+						<td>${task.id}</td>
+						<td>${task.name}</td>
+						<td><fmt:formatDate value="${task.registered}"
+								pattern="dd/MM/yyyy HH:mm:ss" /></td>
+						<td>${task.note}</td>
+						<td><c:if test="${task.status == true }">Finalizada</c:if> <c:if
+								test="${task.status ==false }">Aberto - <a
+									href="/user/tasks/finalize_tasks?id=${task.id}">(Finalizar?)</a>
+							</c:if></td>
+						<td><fmt:formatDate value="${task.complete}"
+								pattern="dd/MM/yyyy HH:mm:ss" /></td>
+						<td>${user.name}</td>
+						<td>
+							<a href="/user/tasks/edit?id=${task.id}">
+									<button type="button" class="btn btn-info">Editar</button>
+							</a>
+						</td>
+						<td>
+							<a href="/user/tasks/show?id=${task.id}">
+								<button type="button" class="btn btn-warning">Vizualizar</button>
+							</a>						
+						</td>
+						<td><a href="/user/tasks/remove?id=${task.id}"><button
+									type="button" class="btn btn-danger">Remover</button></a></td>
+						</tr>
+					</c:forEach>
+				</c:if>
 			</tbody>
 		</table>
 

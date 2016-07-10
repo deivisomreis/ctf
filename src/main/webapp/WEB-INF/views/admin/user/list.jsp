@@ -71,10 +71,10 @@
 						<td><a href="mailto:${usuario.email}">${usuario.email}</a></td>
 						<td>${usuario.cpf}</td>
 						<c:if test="${usuario.status ==true}">
-							<td>Ativo</td>
+							<td><a href="/admin/user/activeordesactive?id=${usuario.id}">Ativo</a></td>
 						</c:if>
 						<c:if test="${usuario.status ==false}">
-							<td>Desativado</td>
+							<td><a href="/admin/user/activeordesactive?id=${usuario.id}">Desativado</a></td>
 						</c:if>
 						<td><fmt:formatDate value="${usuario.registered}" pattern="dd/MM/yyyy"/></td>
 						<td><a href="/admin/user/edit?id=${usuario.id}"><button type="button" class="btn btn-info">Editar</button></a></td>

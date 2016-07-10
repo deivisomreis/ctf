@@ -172,4 +172,13 @@ public class AdminController {
 			return userList(model, session);
 		}
 	}
+	
+	@RequestMapping("/admin/user/activeordesactive")
+	public String activeOrDesactiveUser(Integer id, HttpSession session, Model model){
+		if(id != null && id  > 0){
+			userDAO.activeOrDesactiveUser(id);
+		}
+		
+		return userList(model, session);
+	}
 }

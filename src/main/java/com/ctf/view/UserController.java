@@ -193,18 +193,9 @@ public class UserController {
 	
 	@RequestMapping("/user/tasks/update")
 	public String updateTasks(Model model, HttpSession session, Tasks task, String option){
-		if(option != null && !option.isEmpty() && option.equals("editar") && task != null){
-			Tasks taskModel = tasksDAO.tasks(task.getId());
-			
-			if(taskModel  != null){
-				taskModel.setName(task.getName());
-				taskModel.setStatus(false);
-				taskModel.setComplete(null);
-				
-				tasksDAO.update(taskModel);
-				
-				model.addAttribute("sucesso", taskModel.getName()   + " editada com sucesso!");
-			}
+		if(option != null && !option.isEmpty() && option.equals("editar") && task != null){							
+			tasksDAO.update(task);
+			model.addAttribute("sucesso", task.getName()   + " editada com sucesso!");
 		}
 		else
 			model.addAttribute("erro", "Erro ao atualizar a tarefa, tente novamente");

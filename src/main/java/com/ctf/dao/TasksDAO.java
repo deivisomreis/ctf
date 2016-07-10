@@ -63,9 +63,18 @@ public class TasksDAO implements TasksInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				manager.getTransaction().begin();
-				manager.merge(tasks);
-				manager.getTransaction().commit();
+				Tasks taskObj = manager.find(Tasks.class, tasks.getId());
+				
+				if(taskObj != null){
+					taskObj.setName(tasks.getName());
+					taskObj.setNote(tasks.getNote());
+					taskObj.setComplete(tasks.getComplete());
+					taskObj.setStatus(tasks.isStatus());
+					
+					manager.getTransaction().begin();
+					manager.merge(taskObj);
+					manager.getTransaction().commit();
+				}
 			}
 			catch(Exception  ex){
 				ex.printStackTrace();

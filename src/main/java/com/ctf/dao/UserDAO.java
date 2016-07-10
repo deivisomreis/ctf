@@ -138,5 +138,36 @@ public class UserDAO implements UserInterface {
 		
 		return null;
 	}
+	
+	public void activeOrDesactiveUser(Integer id){
+		if(id != null && id >0){
+			EntityManager manager = ConnectionFactory.getConnection();
+			
+			try{
+				User user = manager.find(User.class, id);
+				
+				if(user != null){
+					if(user.isStatus()){
+						user.setStatus(false);
+						manager.getTransaction().begin();
+						manager.merge(user);
+						manager.getTransaction().commit();
+					}
+					else{
+						user.setStatus(true);
+						manager.getTransaction().begin();
+						manager.merge(user);
+						manager.getTransaction().commit();
+					}
+				}
+			}
+			catch(Exception  ex){
+				ex.printStackTrace();
+			}
+			finally {
+				manager.close();
+			}
+		}
+	}
 
 }
