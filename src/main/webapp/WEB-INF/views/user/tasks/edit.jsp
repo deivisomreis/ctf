@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -74,7 +73,7 @@
 				<input type="hidden" name="id" value="${task.id}">
 				<input type="hidden" name="option" value="editar">
 				<fieldset>
-					<legend>Editar Cadastro</legend>
+					<legend>Editar Tarefa</legend>
 					<div class="form-group">
 						<label for="usr">Nome:</label> 
 						<input type="text" class="form-control" id="usr" required="true" placeholder="Nome da Tarefa" name="name" value="${task.name}">

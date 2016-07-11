@@ -285,6 +285,8 @@ public class UserController {
 	
 	@RequestMapping("/user/financialcontrol/new")
 	public String newFinancialControl(FinancialControl fc, Model model, HttpSession session, String option) {
+		model.addAttribute("user", session.getAttribute("user"));
+		
 		if(option != null){
 			if(option.equals("cadastrar") && fc != null && !fc.getName().isEmpty() && fc.getValue() > 0){
 				fcDAO.insert(fc);
@@ -300,16 +302,34 @@ public class UserController {
 	
 	@RequestMapping("/user/financialcontrol/edit")
 	public String  editFinancialControl(Integer  id, Model model, HttpSession session) {
-		return "user/financialcontrol/edit";
+		if(id != null && id > 0){
+			model.addAttribute("user", session.getAttribute("user"));
+			model.addAttribute("fc", fcDAO.fc(id));
+			
+			return "user/financialcontrol/edit";
+		}
+		else{
+			model.addAttribute("erro", "erro ao direcionar, tente novamente!");
+			return listFinancialControl(model, session);
+		}		
 	}
 	
 	@RequestMapping("/user/financialcontrol/remove")
 	public String removeFinancialControl(Integer id, Model model, HttpSession session){
+		if(id != null && id >0){
+			fcDAO.remove(id);
+			model.addAttribute("sucesso", "lançamento removido com sucesso!");
+		}
+		else
+			model.addAttribute("erro", "erro ao deletar lancamento");
+		
 		return listFinancialControl(model, session);
 	}
 	
 	@RequestMapping("/user/financialcontrol/list")
 	public String listFinancialControl(Model model, HttpSession session){
+		model.addAttribute("user", session.getAttribute("user"));
+		model.addAttribute("fcs", fcDAO.fcs((User) session.getAttribute("user")));
 		return "user/financialcontrol/list";
 	}
 	
@@ -320,7 +340,16 @@ public class UserController {
 	
 	@RequestMapping("/user/financialcontrol/show")
 	public String showFinancialControl(Integer id, Model model, HttpSession session){
-		return "user/financialcontrol/show";
+		if(id != null && id > 0){
+			model.addAttribute("user", session.getAttribute("user"));
+			model.addAttribute("fc", fcDAO.fc(id));
+			
+			return "user/financialcontrol/show";
+		}
+		else{
+			model.addAttribute("erro", "Erro ao redirecionar o lançamento");
+			return "user/financialcontrol/show";
+		}
 	}
 	
 	@RequestMapping("/user/financialcontrol/down")
