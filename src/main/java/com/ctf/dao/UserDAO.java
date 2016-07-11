@@ -127,7 +127,7 @@ public class UserDAO implements UserInterface {
 		EntityManager manager = ConnectionFactory.getConnection();
 		
 		try{
-			return manager.createQuery("from User").getResultList();
+			return manager.createQuery("from User order by id desc").getResultList();
 		}
 		catch(Exception ex){
 			ex.printStackTrace();

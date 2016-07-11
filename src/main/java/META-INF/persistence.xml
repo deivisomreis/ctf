@@ -10,6 +10,7 @@
 		<class>com.ctf.model.FinancialControl</class>
 		<class>com.ctf.model.Tasks</class>
 		<class>com.ctf.model.User</class>
+		<class>com.ctf.model.SessionActive</class>
 		
 		<properties>
 			<!-- dados da conexao -->
