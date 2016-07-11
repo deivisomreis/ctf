@@ -1,21 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CTF :: ${user.name}</title>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Comfortaa'
-	rel='stylesheet' type='text/css'>
-<link href="/layout.css" rel="stylesheet" type="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>CTF :: ${user.name}</title>
+	<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Comfortaa'	rel='stylesheet' type='text/css'>
+	<link href="/layout.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container">
@@ -25,7 +20,7 @@
 				<a class="navbar-brand" href="/">CTF :: ${user.name}</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/user/home">Inicio</a></li>
+				<li><a href="/user/home">Inicio</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Usuário<span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -38,7 +33,7 @@
 						<li><a href="/user/tasks/register">Nova Tarefa</a></li>
 						<li><a href="/user/tasks/list">Mostrar Tarefas</a></li>
 					</ul></li>
-				<li class="dropdown"><a class="dropdown-toggle"
+				<li class="active" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Agenda<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/agenda/register">Novo Contato</a></li>
@@ -71,19 +66,23 @@
 					<th>Id</th>
 					<th>Nome</th>
 					<th>Email</th>
-					<td>CPF</td>
-					<th>Senha</th>
-					<th>Opções</th>
+					<th>Telefone</th>
+					<th>Celular</th>
+					<th>Obs</th>
+					<th colspan="3">Opções</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>${user.id}</td>
-					<td>${user.name}</td>
-					<td><a href="mailto:${user.email}">${user.email}</a></td>
-					<td>${user.cpf}</td>
-					<td>******</td>
-					<td><a href="/admin/edit"><button type="button" class="btn btn-info">Editar</button></a></td>
+					<td>${agenda.id}</td>
+					<td>${agenda.name}</td>
+					<td><a href="mailto:${agenda.email}">${agenda.email}</a></td>
+					<td>${agenda.phoneNumber}</td>
+					<td>${agenda.cellPhoneNumber}</td>
+					<td>${agenda.note}</td>
+					<td><a href="/user/agenda/edit?id=${agenda.id}"><button type="button" class="btn btn-info">Editar</button></a></td>
+					<td><a href="/user/agenda/show?id=${agenda.id}"><button type="button" class="btn btn-warning" disabled="disabled">Visualizar</button></a></td>
+					<td><a href="/user/agenda/remove?id=${agenda.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>
 				</tr>
 			</tbody>
 		</table>

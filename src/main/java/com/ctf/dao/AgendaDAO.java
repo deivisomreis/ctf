@@ -63,9 +63,20 @@ public class AgendaDAO implements AgendaInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				manager.getTransaction().begin();
-				manager.merge(agenda);
-				manager.getTransaction().commit();
+				
+				Agenda agendaObj = manager.find(Agenda.class, agenda.getId());
+				
+				if(agendaObj != null){
+					agendaObj.setCellPhoneNumber(agenda.getCellPhoneNumber());
+					agendaObj.setEmail(agenda.getEmail());
+					agendaObj.setName(agenda.getName());
+					agendaObj.setNote(agenda.getNote());
+					agendaObj.setPhoneNumber(agenda.getPhoneNumber());
+					
+					manager.getTransaction().begin();
+					manager.merge(agendaObj);
+					manager.getTransaction().commit();
+				}
 			}
 			catch(Exception ex){
 				ex.printStackTrace();

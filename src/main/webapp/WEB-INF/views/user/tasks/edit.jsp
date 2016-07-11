@@ -84,7 +84,7 @@
 					</div>
 					<div class="form-group">
 						<label for="pwd">Anotação:</label><br/>
-						<textarea placeholder="Descreva sua Tarefa" name="note">${task.note}</textarea>
+						<textarea class="form-control" rows="5" placeholder="Descreva sua Tarefa" name="note">${task.note}</textarea>
 					</div>				
 					<div class="form-group">
 						<label for="pwd">Status:</label> 

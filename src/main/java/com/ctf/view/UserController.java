@@ -1,5 +1,7 @@
 package com.ctf.view;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -283,12 +285,16 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping("/user/financialcontrol/new")
+	@RequestMapping("/user/financialcontrol/register")
 	public String newFinancialControl(FinancialControl fc, Model model, HttpSession session, String option) {
 		model.addAttribute("user", session.getAttribute("user"));
 		
 		if(option != null){
 			if(option.equals("cadastrar") && fc != null && !fc.getName().isEmpty() && fc.getValue() > 0){
+				fc.setUser((User) session.getAttribute("user"));
+				Date dateRegistered = new Date();
+				fc.setRegistered(dateRegistered);
+				
 				fcDAO.insert(fc);
 				model.addAttribute("sucesso", " Lançamento cadastrado com sucesso!");
 				model.addAttribute("user", session.getAttribute("user"));
@@ -334,7 +340,21 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/financialcontrol/update")
-	public String updateFinancialControl(FinancialControl fc, Model model, HttpSession  session){
+	public String updateFinancialControl(FinancialControl fc, Model model, HttpSession  session, String option){
+		if(option != null){
+			if(!option.isEmpty() && option.equals("editar") && fc != null){
+				fcDAO.update(fc);
+				
+				model.addAttribute("sucesso", "Lancamento editado!");
+				
+				return listFinancialControl(model, session);
+			}
+			else{
+				model.addAttribute("erro", "Erro, favor verificar os dados");				
+				return editFinancialControl(fc.getId(), model, session);
+			}
+		}
+		
 		return listFinancialControl(model, session);
 	}
 	

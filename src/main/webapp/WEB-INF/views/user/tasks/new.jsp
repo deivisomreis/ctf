@@ -82,7 +82,7 @@
 						class="form-control" id="usr" required="true" placeholder="Nome da Tarefa" name="name" value="">
 				</div>
 				<div class="form-group">
-				<textarea cols="60" name="note" placeholder="Descreva aqui a tarefa"></textarea>
+				<textarea rows="5" class="form-control" name="note" placeholder="Descreva aqui a tarefa"></textarea>
 				</div>
 				<button type="reset" class="btn btn-danger">Limpar</button>
 				<button type="submit" class="btn btn-success" style="margin-left: 250px">Cadastrar</button>

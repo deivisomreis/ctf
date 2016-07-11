@@ -1,21 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CTF :: ${user.name}</title>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Comfortaa'
-	rel='stylesheet' type='text/css'>
-<link href="/layout.css" rel="stylesheet" type="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>CTF :: ${user.name}</title>
+	<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Comfortaa'	rel='stylesheet' type='text/css'>
+	<link href="/layout.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container">
@@ -25,7 +20,7 @@
 				<a class="navbar-brand" href="/">CTF :: ${user.name}</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/user/home">Inicio</a></li>
+				<li><a href="/user/home">Inicio</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Usuário<span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -44,7 +39,7 @@
 						<li><a href="/user/agenda/register">Novo Contato</a></li>
 						<li><a href="/user/agenda/list">Mostrar Contatos</a></li>
 					</ul></li>
-				<li class="dropdown"><a class="dropdown-toggle"
+				<li  class="active" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Finanças<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/financialcontrol/register">Novo
@@ -73,34 +68,37 @@
 			</div>
 		</c:if>
 
-		<form role="form" action="/admin/user/update" method="post"> 
-		<input type="hidden" name="id" value="${usuario.id}">
+		<form role="form" action="/user/financialcontrol/update" method="post"> 
+		<input type="hidden" name="id" value="${fc.id}">
+		<input type="hidden" name="option" value="editar">
 			<fieldset>
-				<legend>Editar Cadastro</legend>
+				<legend>Editar Lançamento</legend>
 				<div class="form-group">
-					<label for="usr">Usuario:</label> <input type="text"
-						class="form-control" id="usr" required="true" placeholder="Nome de Usuário" name="name" value="${usuario.name}">
+					<label for="usr">Nome:</label> <input type="text"
+						class="form-control" id="usr" required="true" placeholder="Nome do lançamento (Dívida)" name="name" value="${fc.name}">
 				</div>
 				<div class="form-group">
-					<label for="pwd">Email:</label> <input type="email"
-						class="form-control" id="pwd" required="true" name="email" placeholder="Seu email" value="${usuario.email}">
+					<label for="pwd">Valor:</label> <input type="text"
+						class="form-control" id="pwd" required="true" name="value" placeholder="Valor" value="<fmt:formatNumber  minFractionDigits='2' maxFractionDigits='2' value='${fc.value}'/>">
 				</div>
 				<div class="form-group">
-					<label for="pwd">CPF:</label> <input type="text"
-						class="form-control" id="pwd" required="true" name="cpf" placeholder="Seu CPF" value="${usuario.cpf}">
+					<label for="pwd">Observação:</label>
+					<textarea class="form-control" rows="5" name="note" placeholder="Descreva aqui detalher da dívida"></textarea>
 				</div>
-				<div class="form-group">
-					<label for="pwd">Senha:</label> <input type="password"
-						class="form-control" id="pwd" required="true" id="password" name="password" placeholder="Sua senha" value="${usuario.password}">
-				</div>
-				<button type="reset" class="btn btn-danger">Limpar</button> 
-				<button type="submit" class="btn btn-success" style="margin-left: 300px">Editar</button>
+				<button type="reset" class="btn btn-danger">Cancelar</button>
+				<button id="button_enviar" type="submit" class="btn btn-success" style="margin-left: 250px">Editar</button>
 			</fieldset>
 		</form>
 
 	</div>
 </body>
 </html>
+
+<script>
+$("#button_enviar").click(function(){
+	$("#pwd").val($("#pwd").val().replace(",","."));
+});
+</script>
 
 <style>
 * {

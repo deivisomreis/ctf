@@ -68,25 +68,28 @@
 			</div>
 		</c:if>
 
-		<form role="form" action="/admin/user/register" method="post"> 
-		<input type="hidden" name="cadastrar" value="cadastrar">
+		<form role="form" action="/user/agenda/register" method="post"> 
+		<input type="hidden" name="option" value="cadastrar">
 			<fieldset>
 				<legend>Novo Contato</legend>
 				<div class="form-group">
-					<label for="usr">Usuario:</label> <input type="text"
+					<label for="usr">Contato:</label> <input type="text"
 						class="form-control" id="usr" required="true" placeholder="Nome de Usuário" name="name" value="">
 				</div>
 				<div class="form-group">
 					<label for="pwd">Email:</label> <input type="email"
-						class="form-control" id="pwd" required="true" name="email" placeholder="Seu email" value="">
+						class="form-control" id="pwd" name="email" placeholder="Email do Contato" value="">
 				</div>
 				<div class="form-group">
-					<label for="pwd">CPF:</label> <input type="text"
-						class="form-control" id="pwd" required="true" name="cpf" placeholder="Seu CPF" value="">
+					<label for="pwd">Telefone:</label> <input type="text"
+						class="form-control" id="pwd"  name="phoneNumber" placeholder="Número de Telefone" value="">
 				</div>
 				<div class="form-group">
-					<label for="pwd">Senha:</label> <input type="password"
-						class="form-control" id="pwd" required="true" name="password" placeholder="Sua senha" value="">
+					<label for="pwd">Celular:</label> <input type="text"
+						class="form-control" id="pwd"  name="cellPhoneNumber" placeholder="Número de Celular" value="">
+				</div>
+				<div class="form-group">
+					<textarea class="form-control" rows="5" placeholder="Informe aqui alguma observação" name="note"></textarea>
 				</div>
 				<button type="reset" class="btn btn-danger">Limpar</button>
 				<button type="submit" class="btn btn-success" style="margin-left: 250px">Cadastrar</button>

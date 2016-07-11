@@ -61,15 +61,22 @@ public class FinancialControlDAO implements FinancialControlInterface {
 		if(fc != null){
 			EntityManager manager = ConnectionFactory.getConnection();
 			
-			FinancialControl fcObj = fc(fc.getId());
-			fcObj.setName(fc.getName());
-			fcObj.setNote(fc.getNote());
-			fcObj.setValue(fc.getValue());
-			
 			try{
-				manager.getTransaction().begin();
-				manager.merge(fc);
-				manager.getTransaction().commit();
+				
+				FinancialControl fcObj = manager.find(FinancialControl.class, fc.getId());
+				
+				if(fcObj != null){
+					
+					fcObj.setName(fc.getName());
+					fcObj.setNote(fc.getNote());
+					fcObj.setValue(fc.getValue());
+					
+					manager.getTransaction().begin();
+					manager.merge(fcObj);
+					manager.getTransaction().commit();
+				}
+				
+				
 			}
 			catch(Exception ex){
 				ex.printStackTrace();
@@ -106,7 +113,7 @@ public class FinancialControlDAO implements FinancialControlInterface {
 			EntityManager manager = ConnectionFactory.getConnection();
 			
 			try{
-				Query query = manager.createQuery("from FinancialControl where user=:user");
+				Query query = manager.createQuery("from FinancialControl where user=:user order by id desc");
 				query.setParameter("user", user);
 				
 				return query.getResultList();

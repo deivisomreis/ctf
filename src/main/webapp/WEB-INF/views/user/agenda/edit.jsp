@@ -68,28 +68,32 @@
 			</div>
 		</c:if>
 
-		<form role="form" action="/admin/user/update" method="post"> 
-		<input type="hidden" name="id" value="${usuario.id}">
+		<form role="form" action="/user/agenda/update" method="post"> 
+		<input type="hidden" name="id" value="${agenda.id}">
+		<input type="hidden" name="option" value="editar">
 			<fieldset>
 				<legend>Editar Contato</legend>
 				<div class="form-group">
-					<label for="usr">Usuario:</label> <input type="text"
-						class="form-control" id="usr" required="true" placeholder="Nome de Usuário" name="name" value="${usuario.name}">
+					<label for="usr">Contato:</label> <input type="text"
+						class="form-control" id="usr" required="true" placeholder="Nome de Usuário" name="name" value="${agenda.name}">
 				</div>
 				<div class="form-group">
 					<label for="pwd">Email:</label> <input type="email"
-						class="form-control" id="pwd" required="true" name="email" placeholder="Seu email" value="${usuario.email}">
+						class="form-control" id="pwd" required="true" name="email" placeholder="Email do Contato" value="${agenda.email}">
 				</div>
 				<div class="form-group">
-					<label for="pwd">CPF:</label> <input type="text"
-						class="form-control" id="pwd" required="true" name="cpf" placeholder="Seu CPF" value="${usuario.cpf}">
+					<label for="pwd">Telefone:</label> <input type="text"
+						class="form-control" id="pwd"  name="phoneNumber" placeholder="Número de Telefone" value="${agenda.phoneNumber}">
 				</div>
 				<div class="form-group">
-					<label for="pwd">Senha:</label> <input type="password"
-						class="form-control" id="pwd" required="true" id="password" name="password" placeholder="Sua senha" value="${usuario.password}">
+					<label for="pwd">Celular:</label> <input type="text"
+						class="form-control" id="pwd"  name="cellPhoneNumber" placeholder="Número de Celular" value="${agenda.cellPhoneNumber}">
 				</div>
-				<button type="reset" class="btn btn-danger">Limpar</button> 
-				<button type="submit" class="btn btn-success" style="margin-left: 300px">Editar</button>
+				<div class="form-group">
+					<textarea class="form-control" rows="5" placeholder="Informe aqui alguma observação" name="note">${agenda.note}</textarea>
+				</div>
+				<button type="reset" class="btn btn-danger">Cancelar</button>
+				<button type="submit" class="btn btn-success" style="margin-left: 250px">Editar</button>
 			</fieldset>
 		</form>
 
