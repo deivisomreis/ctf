@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.ctf.business.Automatization;
 import com.ctf.dao.AdminDAO;
 import com.ctf.dao.AgendaDAO;
 import com.ctf.dao.SessionActiveDAO;
@@ -15,11 +16,6 @@ import com.ctf.model.User;
 public class Exercise {
 	
 	public static void main(String[] args) {	
-		SessionActiveDAO sessionDAO = new SessionActiveDAO();
-		UserDAO userDAO = new UserDAO();
-		
-		sessionDAO.lancarNovaSessao(userDAO.users());
-		
-		
+		Automatization.startAutomatization();		
 	}
 }
