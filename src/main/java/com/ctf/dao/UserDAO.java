@@ -30,7 +30,8 @@ public class UserDAO implements UserInterface {
 			}
 		}
 	}
-
+	
+	// Método remove sem uso!
 	@Override
 	public void remove(Integer id) {
 		if(id != null && id >0){
@@ -50,6 +51,7 @@ public class UserDAO implements UserInterface {
 		}
 
 	}
+
 
 	@Override
 	public void update(User user) {
