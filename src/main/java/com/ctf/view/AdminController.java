@@ -1,5 +1,7 @@
 package com.ctf.view;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ctf.criptografia.CriptografarSenha;
 import com.ctf.dao.AdminDAO;
 import com.ctf.dao.UserDAO;
 import com.ctf.model.Admin;
@@ -25,7 +28,7 @@ public class AdminController {
 	private static UserDAO userDAO;
 	
 	@RequestMapping("/adminlogin")
-	public String login(String admin, String password, Model model, HttpSession session) {
+	public String login(String admin, String password, Model model, HttpSession session) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		if(AdminAware.isAdmin(session.getAttribute("user"))){
 			session.setAttribute("user", session.getAttribute("user"));
 			return "admin/home";
@@ -35,7 +38,7 @@ public class AdminController {
 			return "adminlogin";
 		
 		else{
-			Admin a = adminDAO.login(admin, password);
+			Admin a = adminDAO.login(admin, CriptografarSenha.criptografarSenha(password));
 			
 			if(a != null){
 				session.setAttribute("user", a);
@@ -152,7 +155,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/user/update")
-	public String update(Model model, HttpSession session, User user) {
+	public String update(Model model, HttpSession session, User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		if(user != null && !user.getCpf().isEmpty() && !user.getEmail().isEmpty() && !user.getPassword().isEmpty()){
 			User userB = userDAO.user(user.getId());
 			
