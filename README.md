@@ -10,6 +10,7 @@ As tecnologias e frameworks empregados estão descritos abaixo:
 6 - BD utilizado MySQL
 7 - LOG4J
 8 - JSTL
+9 - Criptografia de senhas utilizando a classe MessageDigest do pacote java.security
 
 O projeto consiste em cadastro de dados (agenda telefonica, tarefas, lançamentos de gastos) para usuários!
 Cadastro usuários feito pelo Adminstrador;
