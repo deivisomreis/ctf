@@ -1,5 +1,7 @@
 package com.ctf.view;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ctf.criptografia.CriptografarSenha;
 import com.ctf.dao.AgendaDAO;
 import com.ctf.dao.FinancialControlDAO;
 import com.ctf.dao.TasksDAO;
@@ -34,14 +37,15 @@ public class UserController {
 	private static FinancialControlDAO  fcDAO;
 	
 	@RequestMapping("/userlogin")
-	public String login(String user, String password, Model model, HttpSession session) {
+	public String login(String user, String password, Model model, HttpSession session) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		if(UserAware.isUser(session.getAttribute("user"))){
 			model.addAttribute("user", session.getAttribute("user"));
 			return "user/home";
 		}
 		
 		else if(user != null && password != null && !password.isEmpty() && !user.isEmpty()){
-			User userObj = userDAO.login(user, password);
+			String senhaDecodificada =  CriptografarSenha.criptografarSenha(password); // gerar senha criptografada
+			User userObj = userDAO.login(user, senhaDecodificada);
 			
 			if(userObj != null){
 				if(userObj.isStatus()){
@@ -95,7 +99,7 @@ public class UserController {
 			
 			session.setAttribute("user", userDAO.user(user.getId()));
 			
-			model.addAttribute("sucesso", "Usuário editado com sucesso!");
+			model.addAttribute("sucesso", "Usuï¿½rio editado com sucesso!");
 			
 			return show(model, session);
 		}
@@ -296,7 +300,7 @@ public class UserController {
 				fc.setRegistered(dateRegistered);
 				
 				fcDAO.insert(fc);
-				model.addAttribute("sucesso", " Lançamento cadastrado com sucesso!");
+				model.addAttribute("sucesso", " Lanï¿½amento cadastrado com sucesso!");
 				model.addAttribute("user", session.getAttribute("user"));
 			}
 			else{
@@ -324,7 +328,7 @@ public class UserController {
 	public String removeFinancialControl(Integer id, Model model, HttpSession session){
 		if(id != null && id >0){
 			fcDAO.remove(id);
-			model.addAttribute("sucesso", "lançamento removido com sucesso!");
+			model.addAttribute("sucesso", "lanï¿½amento removido com sucesso!");
 		}
 		else
 			model.addAttribute("erro", "erro ao deletar lancamento");
@@ -367,7 +371,7 @@ public class UserController {
 			return "user/financialcontrol/show";
 		}
 		else{
-			model.addAttribute("erro", "Erro ao redirecionar o lançamento");
+			model.addAttribute("erro", "Erro ao redirecionar o lanï¿½amento");
 			return "user/financialcontrol/show";
 		}
 	}
