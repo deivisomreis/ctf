@@ -58,7 +58,7 @@ public class UserController {
 				}
 			}
 			else{
-				model.addAttribute("erro", "");
+				model.addAttribute("erro", "Favor verificar os dados!");
 				return "userlogin";
 			}
 		}

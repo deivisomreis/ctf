@@ -64,6 +64,7 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:if test="${not empty usuarios}">
 				<c:forEach items="${usuarios}" var="usuario">
 					<tr>
 						<td>${usuario.id}</td>
@@ -81,6 +82,12 @@
 						<td><a href="/admin/user/remove?id=${usuario.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty usuarios}">
+					<tr>
+						<td colspan="8" align="center" style="color: red; font-weight: bold;">Nenhum usuário cadastrado</td>
+					</tr>
+				</c:if>
 			</tbody>
 		</table>
 

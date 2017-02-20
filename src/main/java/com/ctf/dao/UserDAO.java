@@ -31,7 +31,7 @@ public class UserDAO implements UserInterface {
 		}
 	}
 	
-	// Método remove sem uso!
+	// Mï¿½todo remove sem uso!
 	@Override
 	public void remove(Integer id) {
 		if(id != null && id >0){
@@ -61,13 +61,12 @@ public class UserDAO implements UserInterface {
 			
 			try{
 				User userObj = manager.find(User.class, user.getId());
-				userObj.setCpf(user.getCpf());
-				userObj.setEmail(user.getEmail());
-				userObj.setName(user.getName());
-				userObj.setPassword(user.getPassword());				
+				user.setRegistered(userObj.getRegistered());
+				
+				System.out.println(userObj.getPassword());
 				
 				manager.getTransaction().begin();
-				manager.merge(userObj);
+				manager.merge(user);
 				manager.getTransaction().commit();
 			}
 			catch(Exception ex){
@@ -110,7 +109,11 @@ public class UserDAO implements UserInterface {
 				query.setParameter("email", email);
 				query.setParameter("password", password);
 				
-				return (User) query.getSingleResult();
+				if(query.getSingleResult() != null)
+					return (User) query.getSingleResult();
+				
+				else
+					return null;
 			}
 			catch(Exception  ex){
 				ex.printStackTrace();

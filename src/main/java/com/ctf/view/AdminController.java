@@ -157,14 +157,9 @@ public class AdminController {
 	@RequestMapping("/admin/user/update")
 	public String update(Model model, HttpSession session, User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		if(user != null && !user.getCpf().isEmpty() && !user.getEmail().isEmpty() && !user.getPassword().isEmpty()){
-			User userB = userDAO.user(user.getId());
 			
-			userB.setCpf(user.getCpf());
-			userB.setEmail(user.getEmail());
-			userB.setName(user.getName());
-			userB.setPassword(user.getPassword());
-			
-			userDAO.update(userB);
+			userDAO.update(user);
+			System.out.println(user.getPassword());
 			
 			model.addAttribute("sucesso", "usuario atualizado!");
 			
