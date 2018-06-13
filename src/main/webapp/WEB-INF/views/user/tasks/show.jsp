@@ -89,14 +89,14 @@
 					<td>${task.note}</td>
 					<td><c:if test="${task.status == true }">Finalizada</c:if> <c:if
 							test="${task.status ==false }">Aberto - <a
-								href="/user/tasks/finalize_tasks?id=${task.id}">(Finalizar?)</a>
+								href="/user/tasks/finalize_tasks/${task.id}">(Finalizar?)</a>
 						</c:if></td>
 					<td><fmt:formatDate value="${task.complete}"
 							pattern="dd/MM/yyyy HH:mm:ss" /></td>
 					<td>${user.name}</td>
-					<td><a href="/user/tasks/edit?id=${task.id}"><button
+					<td><a href="/user/tasks/edit/${task.id}"><button
 								type="button" class="btn btn-info">Editar</button></a></td>
-					<td><a href="/user/tasks/remove?id=${task.id}"><button
+					<td><a href="/user/tasks/remove/${task.id}"><button
 								type="button" class="btn btn-danger">Remover</button></a></td>
 					</tr>
 				</tr>

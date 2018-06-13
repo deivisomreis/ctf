@@ -85,11 +85,11 @@
 							<td>Pago</td>
 						</c:if>
 						<c:if test="${fc.status == false }">
-							<td>Em Aberto! <a href="/user/financialcontrol/down?id=${fc.id}">Finalizar?</a></td>
+							<td>Em Aberto! <a href="/user/financialcontrol/down/${fc.id}">Finalizar?</a></td>
 						</c:if>
 						<td><fmt:formatDate value="${fc.paid}" pattern="dd/MM/yyyy HH:mm"/></td>
-						<td><a href="/user/financialcontrol/edit?id=${fc.id}"><button type="button" class="btn btn-info">Editar</button></a></td>
-						<td><a href="/user/financialcontrol/remove?id=${fc.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>
+						<td><a href="/user/financialcontrol/edit/${fc.id}"><button type="button" class="btn btn-info">Editar</button></a></td>
+						<td><a href="/user/financialcontrol/remove/${fc.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

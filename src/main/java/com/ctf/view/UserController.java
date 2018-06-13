@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ctf.criptografia.CriptografarSenha;
@@ -131,8 +132,8 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/user/tasks/edit")
-	public String editTask(Integer id, Model model, HttpSession session) {		
+	@RequestMapping("/user/tasks/edit/{id}")
+	public String editTask(@PathVariable Integer id, Model model, HttpSession session) {		
 		if(id != null && id  > 0){
 			model.addAttribute("user", session.getAttribute("user"));
 			model.addAttribute("task", tasksDAO.tasks(id));
@@ -145,8 +146,8 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/user/tasks/remove")
-	public String removeTasks(Integer id, Model model, HttpSession session) {
+	@RequestMapping("/user/tasks/remove/{id}")
+	public String removeTasks(@PathVariable Integer id, Model model, HttpSession session) {
 		if(id != null && id > 0){
 			tasksDAO.remove(id);
 			
@@ -166,8 +167,8 @@ public class UserController {
 		return "user/tasks/list";
 	}
 	
-	@RequestMapping("/user/tasks/finalize_tasks")
-	public String finalizeTasks(Integer id, HttpSession session, Model model){
+	@RequestMapping("/user/tasks/finalize_tasks/{id}")
+	public String finalizeTasks(@PathVariable Integer id, HttpSession session, Model model){
 		if(id != null && id > 0){
 			tasksDAO.finalizeTask(id);
 			
@@ -181,8 +182,8 @@ public class UserController {
 		return listTasks(model, session);
 	}
 	
-	@RequestMapping("/user/tasks/show")
-	public String  showTasks(Model model, HttpSession session, Integer id) {
+	@RequestMapping("/user/tasks/show/{id}")
+	public String  showTasks(Model model, HttpSession session, @PathVariable Integer id) {
 		if(id != null && id >0){
 			model.addAttribute("user", session.getAttribute("user"));
 			model.addAttribute("task", tasksDAO.tasks(id));
@@ -228,8 +229,8 @@ public class UserController {
 		return "user/agenda/new";
 	}
 	
-	@RequestMapping("/user/agenda/edit")
-	public String editAgenda(Integer id, Model model, HttpSession session) {
+	@RequestMapping("/user/agenda/edit/{id}")
+	public String editAgenda(@PathVariable Integer id, Model model, HttpSession session) {
 		if(id != null && id > 0){
 			model.addAttribute("agenda", agendaDAO.agenda(id));
 			model.addAttribute("user", session.getAttribute("user"));
@@ -242,8 +243,8 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/user/agenda/remove")
-	public String removeAgenda(Integer id, Model model, HttpSession session){
+	@RequestMapping("/user/agenda/remove/{id}")
+	public String removeAgenda(@PathVariable Integer id, Model model, HttpSession session){
 		if(id != null && id > 0){
 			agendaDAO.remove(id);
 			model.addAttribute("sucesso", "contato removido com sucesso!");
@@ -277,8 +278,8 @@ public class UserController {
 		return listAgenda(model, session);
 	}
 	
-	@RequestMapping("/user/agenda/show")
-	public String showAgenda(Integer id, Model model, HttpSession session){
+	@RequestMapping("/user/agenda/show/{id}")
+	public String showAgenda(@PathVariable Integer id, Model model, HttpSession session){
 		if(id != null && id > 0){
 			model.addAttribute("user ", session.getAttribute("user"));
 			model.addAttribute("agenda", agendaDAO.agenda(id));
@@ -310,8 +311,8 @@ public class UserController {
 		return "user/financialcontrol/new";
 	}
 	
-	@RequestMapping("/user/financialcontrol/edit")
-	public String  editFinancialControl(Integer  id, Model model, HttpSession session) {
+	@RequestMapping("/user/financialcontrol/edit/{id}")
+	public String  editFinancialControl(@PathVariable Integer  id, Model model, HttpSession session) {
 		if(id != null && id > 0){
 			model.addAttribute("user", session.getAttribute("user"));
 			model.addAttribute("fc", fcDAO.fc(id));
@@ -324,8 +325,8 @@ public class UserController {
 		}		
 	}
 	
-	@RequestMapping("/user/financialcontrol/remove")
-	public String removeFinancialControl(Integer id, Model model, HttpSession session){
+	@RequestMapping("/user/financialcontrol/remove/{id}")
+	public String removeFinancialControl(@PathVariable Integer id, Model model, HttpSession session){
 		if(id != null && id >0){
 			fcDAO.remove(id);
 			model.addAttribute("sucesso", "lan�amento removido com sucesso!");
@@ -362,8 +363,8 @@ public class UserController {
 		return listFinancialControl(model, session);
 	}
 	
-	@RequestMapping("/user/financialcontrol/show")
-	public String showFinancialControl(Integer id, Model model, HttpSession session){
+	@RequestMapping("/user/financialcontrol/show/{id}")
+	public String showFinancialControl(@PathVariable Integer id, Model model, HttpSession session){
 		if(id != null && id > 0){
 			model.addAttribute("user", session.getAttribute("user"));
 			model.addAttribute("fc", fcDAO.fc(id));
@@ -376,8 +377,8 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/user/financialcontrol/down")
-	public String downFinancialControl(Integer id, Model model, HttpSession session){
+	@RequestMapping("/user/financialcontrol/down/{id}")
+	public String downFinancialControl(@PathVariable Integer id, Model model, HttpSession session){
 		return listFinancialControl(model, session);
 	}
 

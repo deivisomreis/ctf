@@ -82,9 +82,9 @@
 							<td>${agenda.phoneNumber}</td>
 							<td>${agenda.cellPhoneNumber}</td>
 							<td>${agenda.note}</td>
-							<td><a href="/user/agenda/edit?id=${agenda.id}"><button type="button" class="btn btn-info">Editar</button></a></td>
-							<td><a href="/user/agenda/show?id=${agenda.id}"><button type="button" class="btn btn-warning">Visualizar</button></a></td>
-							<td><a href="/user/agenda/remove?id=${agenda.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>
+							<td><a href="/user/agenda/edit/${agenda.id}"><button type="button" class="btn btn-info">Editar</button></a></td>
+							<td><a href="/user/agenda/show/${agenda.id}"><button type="button" class="btn btn-warning">Visualizar</button></a></td>
+							<td><a href="/user/agenda/remove/${agenda.id}"><button type="button" class="btn btn-danger">Remover</button></a></td>
 						</tr>
 					</c:forEach>
 				</c:if>
