@@ -12,7 +12,7 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script
 		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link href='https://fonts.googleapis.com/css?family=Comfortaa'
+	<link href='https://fonts.googleapis.com/css?family=Muli'
 		rel='stylesheet' type='text/css'>
 	<link href="/layout.css" rel="stylesheet" type="text/css">
 </head>
@@ -58,6 +58,6 @@
 </html>
 
 <style>
-*{font-family: 'Comfortaa', cursive; font-style: italic;}
+*{font-family: 'Muli';}
 form {margin: auto; width: 450px;}
 </style>
